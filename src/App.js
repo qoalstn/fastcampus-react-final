@@ -1,5 +1,6 @@
 import { Provider } from "react-redux";
-import Bookmark from "./components/bookmark";
+import {Bookmark} from "./components";
+import CardContainer from './containers/cardContainer'
 import "./App.css";
 import store from "./store";
 
@@ -7,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Provider store={store}>
-        <Bookmark />
+        <CardContainer />
       </Provider>
     </div>
   );
