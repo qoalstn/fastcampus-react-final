@@ -1,3 +1,32 @@
-.card-box{
-    background-color: rgb(208, 238, 207);
+.card-box {
+  background-color: rgb(208, 238, 207);
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  border-radius: 10px;
+  margin: 30px 20px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookmark-img {
+  display: inline;
+}
+
+.location-large {
+  margin: 8px;
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.condition {
+  margin: 0 auto;
+  text-align: center;
+  width: 200px;
+  height: 90px;
+  background-color: antiquewhite;
+  border-radius: 8px;
 }

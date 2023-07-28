@@ -1,0 +1,13 @@
+.bookmark-box {
+  display: inline;
+}
+
+.bookmark-inner-box {
+  display: inline;
+}
+
+img {
+  display: inline;
+  width: 20px;
+  height: 20px;
+}

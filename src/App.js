@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
-import {Bookmark} from "./components";
-import CardContainer from './containers/cardContainer'
+import CardContainer from "./containers/CardContainer";
+import { TapBar } from "./components";
 import "./App.css";
 import store from "./store";
 
@@ -9,6 +9,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <CardContainer />
+        <TapBar />
       </Provider>
     </div>
   );
