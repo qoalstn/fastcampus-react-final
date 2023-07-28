@@ -11,6 +11,7 @@
 .card-top {
   display: flex;
   justify-content: space-between;
+
 }
 
 .bookmark-img {
@@ -24,12 +25,17 @@
 }
 
 .condition {
-  text-align: center;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
   margin: 10px;
   width: 200px;
   height: 90px;
-  background-color: antiquewhite;
+  background-color: rgb(246, 244, 241);
   border-radius: 8px;
+  font-weight: bold;
+  font-size: larger;
+  color: rgb(26, 26, 26);
 }
 
 .contition-view {

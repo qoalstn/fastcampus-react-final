@@ -1,42 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
 import Bookmark from "../Bookmark/Bookmark";
+import CardStyle from "./CardStyle";
+import ConditionStyle from "./ConditionStyle";
 
 const Card = ({ cardData }) => {
   const { stationName, pm10Value, pm10Grade, dataTime, sidoName } = cardData;
+  const [condition, setCondition] = useState('')
+  const [bgc, setBgc] = useState('')
 
-  const grade = () => {
+  useEffect(()=>{
     switch (pm10Grade) {
       case "1":
-        return "좋음";
+        setBgc('#4e7ee0')
+        setCondition("좋음")
+        break;
       case "2":
-        return "보통";
+        setBgc('#75b661')
+        setCondition("보통")
+        break;
       case "3":
-        return "한떄나쁨";
+        setBgc('yellow')
+        setCondition("한떄나쁨")
+        break;
       case "4":
-        return "나쁨";
+        setBgc('orange')
+        setCondition("나쁨")
+        break;
       case "5":
-        return "매우나쁨";
+        setBgc('red')
+        setCondition("매우나쁨")
+        break;
       default:
-        return "알수없음";
+        setBgc('gray')
+        setCondition("알수없음")
+        break;
     }
-  };
+  },[])
 
   return (
-    <div className="card-box">
+    <CardStyle backgroundColor={bgc}>
       <div className="card-top">
         <div className="selected-location">
           <span className="location-large">{sidoName}</span>
           <span className="location-small">{stationName}</span>
         </div>
-        <Bookmark className="bookmark-img" />
+        <Bookmark className="bookmark-img" station={stationName}/>
       </div>
       <div className="contition-view">
-        <div className="condition">{grade()}</div>
+        {/* <div className="condition"><span>{condition}</span></div> */}
+        <ConditionStyle fontColor={bgc}><span>{condition}</span></ConditionStyle>
         <div className="figure">미세먼지 수치 : {pm10Value} </div>
         <div className="reference-date">({dataTime}) 기준</div>
       </div>
-    </div>
+      </CardStyle>
   );
 };
 
