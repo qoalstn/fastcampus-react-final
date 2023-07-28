@@ -10,6 +10,8 @@ const CardContainer = () => {
     return state.tapbar.selected;
   });
   const [cardInfo, setCardInfo] = useState([]);
+  const sidoList = ["서울", "부산", "용인"];
+  const stationList = ["은평구", "서대문구", "사하구", "기흥구"];
 
   // const getSelectedTap = () => {
   //   return dispatch(select("my"));
@@ -42,12 +44,17 @@ const CardContainer = () => {
 
   return (
     <div className="card-container">
-      {/* {console.log("carinfo ~~~~", cardInfo)} */}
-      <Dropdown />
-      {/* <div className="card-area"> */}
+      {console.log("my?? ", selectedTap)}
+      {selectedTap == "my" ? (
+        <div>
+          <Dropdown sidoList={sidoList} />
+          <Dropdown stationList={stationList} />
+        </div>
+      ) : (
+        <Dropdown sidoList={sidoList} />
+      )}
       {cardInfo &&
         cardInfo.map((card, index) => <Card key={index} cardData={card} />)}
-      {/* </div> */}
     </div>
   );
 };
