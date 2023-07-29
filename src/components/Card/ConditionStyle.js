@@ -11,7 +11,7 @@ const ConditionStyle = styled.div`
     font-weight: bold;
     font-size: larger;
     background-color: #f6f4f1;
-    color: ${props => props.fontColor};
+    color: ${props => props.fontcolor};
 `;
 
 export default ConditionStyle;

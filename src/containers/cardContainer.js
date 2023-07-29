@@ -2,45 +2,44 @@ import React, { useEffect, useState } from "react";
 import "./CardContainer.css";
 import { Card, Dropdown, TapBar } from "../components";
 import { useDispatch, useSelector } from "react-redux";
+import getDustyInfoItems from "../common/dustyApi"
 
 const CardContainer = () => {
   const dispatch = useDispatch();
-  const selectedTap = useSelector((state) => {
-    return state.tapbar.selected;
-  });
+  const selectedTap = useSelector((state) => state.tapbar.selected);
+  const {mySido, myStation} = useSelector((state)=>state.bookmark.myLocation)
+  const markedList = useSelector((state)=> state.bookmark.markedList)
+
   const [cardInfo, setCardInfo] = useState([]);
   const sidoList = ["서울", "부산", "용인"];
   const stationList = ["은평구", "서대문구", "사하구", "기흥구"];
 
   useEffect(() => {
-    const sidoName = "서울";
-    const stationName = "종로구";
-    const dataTerm = "month";
-    const pageNo = "1";
-    const numOfRows = "10";
-    const returnType = "json";
-    const serviceKey = process.env.REACT_APP_API_KEY;
-    const ver = "1.0";
+    async function getItems(){
+      const items= await getDustyInfoItems()
+      setCardInfo(items)
+    }
+    getItems()
+  }, [cardInfo,selectedTap]);
 
-    const url = 'B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?'
-    const params = `stationName=${stationName}&serviceKey=${serviceKey}&returnType=${returnType}&numOfRows=${numOfRows}&&pageNo=${pageNo}&sidoName=${sidoName}&ver=${ver}`
-
-    fetch(url+params)
-      .then((response) => {
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          console.log("contentType : ", contentType);
-        }
-        return response.json();
+  const renderCard =()=>{
+    if(markedList.length > 0 && selectedTap == "marked"){
+      return markedList.map((card, index) => {
+        return <Card key={index} cardData={card} />
       })
-      .then((data) => {
-        setCardInfo(data.response.body.items);
-      });
-  }, []);
+    }
+    if(selectedTap =="my"){
+      const item = cardInfo.filter((i)=>i.stationName == myStation)
+      return item.map((card, index) => <Card key={index} cardData={card} />)
+    }
+    if(selectedTap == "all"){
+      return cardInfo.map((card, index) => <Card key={index} cardData={card} />)
+    }
+    
+  }
 
   return (
     <div className="card-container">
-      {console.log("my?? ", selectedTap)}
       {selectedTap == "my" ? (
         <div>
           <Dropdown sidoList={sidoList} />
@@ -49,8 +48,9 @@ const CardContainer = () => {
       ) : (
         <Dropdown sidoList={sidoList} />
       )}
-      {cardInfo &&
-        cardInfo.map((card, index) => <Card key={index} cardData={card} />)}
+      {renderCard()}
+      {/* {cardInfo.length > 0 &&
+        cardInfo.map((card, index) => <Card key={index} cardData={card} />)} */}
     </div>
   );
 };

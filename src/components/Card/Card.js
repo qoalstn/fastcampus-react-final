@@ -36,20 +36,20 @@ const Card = ({ cardData }) => {
         setCondition("알수없음")
         break;
     }
-  },[])
+  },[pm10Grade])
 
   return (
-    <CardStyle backgroundColor={bgc}>
+    <CardStyle backgroundcolor={bgc}>
       <div className="card-top">
         <div className="selected-location">
           <span className="location-large">{sidoName}</span>
           <span className="location-small">{stationName}</span>
         </div>
-        <Bookmark className="bookmark-img" station={stationName}/>
+        <Bookmark className="bookmark-img" cardData={cardData}/>
       </div>
       <div className="contition-view">
         {/* <div className="condition"><span>{condition}</span></div> */}
-        <ConditionStyle fontColor={bgc}><span>{condition}</span></ConditionStyle>
+        <ConditionStyle fontcolor={bgc}><span>{condition}</span></ConditionStyle>
         <div className="figure">미세먼지 수치 : {pm10Value} </div>
         <div className="reference-date">({dataTime}) 기준</div>
       </div>

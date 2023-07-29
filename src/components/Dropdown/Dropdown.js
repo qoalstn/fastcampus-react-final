@@ -10,7 +10,6 @@ const Dropdown = (props) => {
   };
 
   useEffect(() => {
-    console.log("props : ", props);
     if (props.hasOwnProperty("sidoList")) setList(props.sidoList);
     if (props.hasOwnProperty("stationList")) setList(props.stationList);
   }, []);

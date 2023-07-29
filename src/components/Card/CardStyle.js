@@ -9,7 +9,7 @@ const CardStyle = styled.div`
     height: 200px;
     border-radius: 10px;
     margin: 30px 20px;
-    background-color: ${props => props.backgroundColor};
+    background-color: ${props => props.backgroundcolor};
     color: beige;
 `;
 

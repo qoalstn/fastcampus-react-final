@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   markedList: [],
-  myStation:"종로구"
+  myLocation:{
+    mySido : "서울",
+    myStation : "마포구"
+  }
 };
 const bookmarkSlice = createSlice({
   name: "bookmark",
@@ -12,10 +15,10 @@ const bookmarkSlice = createSlice({
       state.markedList.push(action.payload)
     },
     popList:(state, action) => {
-      state.markedList = state.markedList.filter((i)=>i !== action.payload)
+      state.markedList = state.markedList.filter((i)=>i.stationName !== action.payload.stationName)
     },
     changeMyStation : (state, action) => {
-      state.myStation = action.payload
+      state.myLocation = action.payload
     },
   },
 });
