@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import bookmarkSlice from "./bookmarkSlice";
 import tapBarSlice from "./tapBarSlice";
+import locationSlice from "./locationSlice";
 
 const store = configureStore({
   reducer: {
-    bookmark: bookmarkSlice.reducer,
     tapbar: tapBarSlice.reducer,
+    location : locationSlice.reducer
   },
 });
 

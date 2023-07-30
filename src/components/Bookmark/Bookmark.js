@@ -1,12 +1,11 @@
-import React, { useState } from "react";
 import "./Bookmark.css";
 import { useDispatch, useSelector } from "react-redux";
-import { pushList, popList } from "../../store/bookmarkSlice";
+import { pushList, popList } from "../../store/locationSlice";
 
 const Bookmark = ({cardData}) => {
   const dispatch = useDispatch();
   const markedList = useSelector((state) => {
-    return state.bookmark.markedList;
+    return state.location.markedList;
   });
 
   const filledStar = process.env.PUBLIC_URL + "/img/filled_star.png";

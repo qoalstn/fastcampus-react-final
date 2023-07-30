@@ -1,24 +1,47 @@
 import React, { useEffect, useState } from "react";
 import "./CardContainer.css";
-import { Card } from "../components";
+import { Card, Dropdown } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import getDustyInfoItems from "../common/dustyApi"
+import { changeMyLocation } from "../store/locationSlice"
 
 const CardContainer = () => {
   const dispatch = useDispatch();
   const selectedTap = useSelector((state) => state.tapbar.selected);
-  const {mySido, myStation} = useSelector((state)=>state.bookmark.myLocation)
-  const markedList = useSelector((state)=> state.bookmark.markedList)
+  const myStation = useSelector((state)=>state.location.myStation)
+  const markedList = useSelector((state)=> state.location.markedList)
 
   const [cardInfo, setCardInfo] = useState([]);
 
-  useEffect(() => {
-    async function getItems(){
-      const items= await getDustyInfoItems()
-      setCardInfo(items)
+  const sido =   ["서울", "부산", "대구", "인천", "경기"]
+  const [station, setStation] = useState([])
+  const [selectedSido, setSelectedSido]= useState()
+  const [selectedStation, setSelectedStation] = useState()
+
+  const dropdownSidoHandler = (e) => {
+    setSelectedSido(e.target.value);
+  };
+
+  const dropdownStationHandler = (e) => {
+    setSelectedStation(e.target.value);
+    if(selectedTap =='my') {
+      dispatch(changeMyLocation({myStation : e.target.value}))
     }
-    getItems()
-  }, [cardInfo,selectedTap]);
+  };
+
+  const renderDropdown =()=>{
+        if (station.length > 0 && selectedTap == "my") {
+          return <>
+            <Dropdown list={sido} selected ={selectedSido} onChange={dropdownSidoHandler}/>
+            <Dropdown list={station} selected ={selectedStation} onChange={dropdownStationHandler}/>
+          </>
+        }
+        if (station.length > 0 && selectedTap == "all") {
+          return <>
+            <Dropdown list={sido} selected ={selectedSido} onChange={dropdownSidoHandler}/>
+          </>
+        }
+    }
 
   const renderCard =()=>{
     if(markedList.length > 0 && selectedTap == "marked"){
@@ -35,10 +58,30 @@ const CardContainer = () => {
     }
   }
 
+  useEffect(() => {
+    async function getItems(){
+      const selectData = {sidoName : selectedSido, stationName :selectedStation}
+      const items= await getDustyInfoItems(selectData)
+      setCardInfo(items)
+      setStation(items.map((i)=>i.stationName))
+
+      if(selectedTap =='my') {
+        dispatch(changeMyLocation({mySido:selectedSido}))
+        dispatch(changeMyLocation({myStation : items[0].stationName}))
+      }
+    }
+    getItems()
+  }, [selectedSido,selectedStation]);
+
   return (
-    <div className="card-container">
-      {renderCard()}
-    </div>
+      <>
+        <div className="top-select-container">
+        {renderDropdown()}
+        </div>
+        <div className="card-container">
+          {renderCard()}
+        </div>
+      </>
   );
 };
 

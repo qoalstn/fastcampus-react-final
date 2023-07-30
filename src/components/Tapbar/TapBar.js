@@ -1,4 +1,3 @@
-import React from "react";
 import "./TapBar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { select } from "../../store/tapBarSlice";
