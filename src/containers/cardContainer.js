@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./CardContainer.css";
+import "../components/Spinner/Spinner.css"
 import { Card, Dropdown } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import getDustyInfoItems from "../common/dustyApi"
 import { changeMyLocation } from "../store/locationSlice"
+import Spinner from "../components/Spinner/Spinner";
 
 const CardContainer = () => {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const CardContainer = () => {
   const [station, setStation] = useState([])
   const [selectedSido, setSelectedSido]= useState()
   const [selectedStation, setSelectedStation] = useState()
+  const [loading, setLoading] = useState(true);
 
   const dropdownSidoHandler = (e) => {
     setSelectedSido(e.target.value);
@@ -69,9 +72,15 @@ const CardContainer = () => {
         dispatch(changeMyLocation({mySido:selectedSido}))
         dispatch(changeMyLocation({myStation : items[0].stationName}))
       }
+
+      setLoading(false);
     }
     getItems()
   }, [selectedSido,selectedStation]);
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
       <>
