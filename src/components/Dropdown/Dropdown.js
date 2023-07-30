@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Dropdown.css";
 
-const Dropdown = (props) => {
-  const [selectedOption, setSelectedOption] = useState("");
+const Dropdown = ({locationList}) => {
+  const [selectedOption, setSelectedOption] = useState("선택");
   const [list, setList] = useState([]);
 
   const handleSelectChange = (e) => {
@@ -10,24 +10,20 @@ const Dropdown = (props) => {
   };
 
   useEffect(() => {
-    if (props.hasOwnProperty("sidoList")) setList(props.sidoList);
-    if (props.hasOwnProperty("stationList")) setList(props.stationList);
+    setList(locationList)
   }, []);
 
   return (
     <div className="dropdown-box">
-      <p>{props.sidoList ? "시도" : "구"}</p>
-      <select value={selectedOption} onChange={handleSelectChange}>
-        {list.length > 0 ? (
-          list.map((val, i) => (
-            <option key={i} value={val}>
-              {val}
-            </option>
-          ))
-        ) : (
-          <option value="option1">-- 선택하세요 --</option>
-        )}
-      </select>
+        <select value={selectedOption} onChange={handleSelectChange}>
+          {list.length > 0 && (
+            list.map((val) => (
+              <option key={val} value={val}>
+                {val}
+              </option>
+            ))
+          ) }
+        </select>
     </div>
   );
 };

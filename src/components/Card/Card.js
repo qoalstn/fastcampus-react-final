@@ -3,11 +3,13 @@ import "./Card.css";
 import Bookmark from "../Bookmark/Bookmark";
 import CardStyle from "./CardStyle";
 import ConditionStyle from "./ConditionStyle";
+import { useSelector } from "react-redux";
 
 const Card = ({ cardData }) => {
   const { stationName, pm10Value, pm10Grade, dataTime, sidoName } = cardData;
   const [condition, setCondition] = useState('')
   const [bgc, setBgc] = useState('')
+  const currentTap = useSelector((state)=>state.tapbar.selected)
 
   useEffect(()=>{
     switch (pm10Grade) {
@@ -45,10 +47,11 @@ const Card = ({ cardData }) => {
           <span className="location-large">{sidoName}</span>
           <span className="location-small">{stationName}</span>
         </div>
-        <Bookmark className="bookmark-img" cardData={cardData}/>
+        {
+          currentTap == "my" ? '' :<Bookmark className="bookmark-img" cardData={cardData}/>
+        }
       </div>
       <div className="contition-view">
-        {/* <div className="condition"><span>{condition}</span></div> */}
         <ConditionStyle fontcolor={bgc}><span>{condition}</span></ConditionStyle>
         <div className="figure">미세먼지 수치 : {pm10Value} </div>
         <div className="reference-date">({dataTime}) 기준</div>
