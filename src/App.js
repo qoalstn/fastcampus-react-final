@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import CardContainer from "./containers/CardContainer";
+import CardContainer from "./containers/cardContainer";
 import { TapBar } from "./components";
 import "./App.css";
 import store from "./store";
